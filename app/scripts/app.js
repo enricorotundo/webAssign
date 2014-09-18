@@ -15,8 +15,7 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch',
-    'facebook'
+    'ngTouch'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -30,45 +29,10 @@ angular
       })
       .when('/login', {
         templateUrl: 'views/login.html',
-        controller: 'authenticationCtrl'
+        controller: 'LoginCtrl'
       })
       .otherwise({
         templateUrl: 'views/login.html',
-        controller: 'authenticationCtrl'
+        controller: 'LoginCtrl'
       });
-  })
-
-// https://github.com/Ciul/angular-facebook
-  .config(function(FacebookProvider) {
-     // Set your appId through the setAppId method or
-     // use the shortcut in the initialize method directly.
-     FacebookProvider.init('1526558950912850');
-  })
-
-// da spostare dopo?
-// https://github.com/Ciul/angular-facebook
-  .controller('authenticationCtrl', function($scope, Facebook) {
-
-    $scope.login = function() {
-      // From now on you can use the Facebook service just as Facebook api says
-      Facebook.login(function(response) {
-        // Do something with response.
-      });
-    };
-
-    $scope.getLoginStatus = function() {
-      Facebook.getLoginStatus(function(response) {
-        if(response.status === 'connected') {
-          $scope.loggedIn = true;
-        } else {
-          $scope.loggedIn = false;
-        }
-      });
-    };
-
-    $scope.me = function() {
-      Facebook.api('/me', function(response) {
-        $scope.user = response;
-      });
-    };
   });
