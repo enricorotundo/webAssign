@@ -22,7 +22,7 @@ angular
     $routeProvider
       .when('/list', {
         templateUrl: 'views/list.html',
-        controller: 'MainCtrl'
+        controller: 'ListCtrl'
       })
       .when('/gallery', {
         templateUrl: 'views/gallery.html',
@@ -85,9 +85,9 @@ angular
 
         var userIsConnected = false;
 
-         // And some fancy flags to display messages upon user status change
-      $scope.byebye = false;
-      $scope.salutation = false;
+        // And some fancy flags to display messages upon user status change
+        $scope.byebye = false;
+        $scope.salutation = false;
 
         /**
            * Watch for Facebook to be ready.
