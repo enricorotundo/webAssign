@@ -38,6 +38,22 @@ angular
       });
   })
 
+   .run(function($location, $rootScope){
+        //console.log("Into run mode");
+        // console.log('Userid 5 is logged in ', $rootScope.FB.getLoginStatus());
+       
+        //now redirect to appropriate path based on login status
+        // if( )
+        // {
+        //   //$location.path('/loginurl'); or          
+        // }
+        // else
+        // {
+        //   //$location.path('/publicurl'); or 
+        // }
+    })
+
+
   // https://github.com/Ciul/angular-facebook
   .config(['FacebookProvider', function(FacebookProvider) {
         
@@ -55,6 +71,8 @@ angular
 
         // Define user empty data :/
         $scope.user = {};
+
+        $scope.accessToken = '';
           
         // Defining user logged status
         $scope.logged = false;
@@ -104,9 +122,14 @@ angular
           Facebook.login(function(response) {
             if (response.status === 'connected') {
                 $scope.logged = true;
+                console.log(JSON.stringify(response));
+                $scope.accessToken = response.authResponse.accessToken;
+
                 $scope.me();
+
+
               }
-          });
+          }, {scope: 'user_photos'}); // ask for pictures permission
         };
 
         $scope.getLoginStatus = function() {
@@ -125,8 +148,9 @@ angular
             * Using $scope.$apply since this happens outside angular framework.
             */
             $scope.$apply(function() {
-               console.log(JSON.stringify(response));
+               
               $scope.user = response;
+             
             });
           });
         };

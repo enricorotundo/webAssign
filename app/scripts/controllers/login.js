@@ -13,5 +13,4 @@ angular.module('webAssignApp')
 	.controller('LoginCtrl',  function ($scope) {
 
 	}
-
 );
