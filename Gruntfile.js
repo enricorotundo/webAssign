@@ -24,6 +24,25 @@ module.exports = function (grunt) {
   // Define the configuration for all the tasks
   grunt.initConfig({
 
+    // https://github.com/jwvdiermen/grunt-include-source#usage-examples
+    includeSource: {
+      options: {
+        // Task-specific options go here.
+        basePath: 'app',
+        templates: {
+          html: {
+            js: '<script src="{filePath}"></script>'
+          }
+        }
+      },
+      myTarget: {
+        // Target-specific file lists and/or options go here.
+        files: {
+          'app/index.html': 'app/index.tpl.html'
+        }
+      },
+    },
+
     // Project settings
     yeoman: appConfig,
 
@@ -405,4 +424,8 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
+
+  // Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
+  // https://github.com/jwvdiermen/grunt-include-source#usage-examples
+  grunt.loadNpmTasks('grunt-include-source');
 };
