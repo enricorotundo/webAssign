@@ -20,12 +20,12 @@ angular
   ])
   .config(function ($routeProvider, $locationProvider) {
     $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
+      .when('/list', {
+        templateUrl: 'views/list.html',
         controller: 'MainCtrl'
       })
-      .when('/about', {
-        templateUrl: 'views/about.html',
+      .when('/gallery', {
+        templateUrl: 'views/gallery.html',
         controller: 'AboutCtrl'
       })
       .when('/login', {
@@ -33,25 +33,30 @@ angular
         controller: 'LoginCtrl'
       })
       .otherwise({
-        templateUrl: 'views/login.html',
-        controller: 'LoginCtrl'
+        redirectTo: '/login'
       });
   })
 
-   .run(function($location, $rootScope){
-        //console.log("Into run mode");
-        // console.log('Userid 5 is logged in ', $rootScope.FB.getLoginStatus());
-       
-        //now redirect to appropriate path based on login status
-        // if( )
-        // {
-        //   //$location.path('/loginurl'); or          
-        // }
-        // else
-        // {
-        //   //$location.path('/publicurl'); or 
-        // }
-    })
+  .run( function($rootScope, $location) {
+      // register listener to watch route changes
+      $rootScope.$on( '$routeChangeStart', function(event, next, current) {
+        if ( $rootScope.token === null ) {
+          // no logged user, we should be going to #login
+          if ( next.templateUrl === 'views/login.html' ) {
+            // already going to #login, no redirect needed
+          } else {
+            // not going to #login, we should redirect now
+            $location.path( '/login' );
+          }
+        }        
+      });
+  })
+
+  .run(['$rootScope', function($rootScope){
+    $rootScope.token = null;
+  }])
+
+
 
 
   // https://github.com/Ciul/angular-facebook
@@ -67,7 +72,8 @@ angular
     '$scope',
     '$timeout',
     'Facebook',
-    function($scope, $timeout, Facebook) {
+    '$rootScope',
+    function($scope, $timeout, Facebook,  $rootScope) {
 
         // Define user empty data :/
         $scope.user = {};
@@ -124,10 +130,8 @@ angular
                 $scope.logged = true;
                 console.log(JSON.stringify(response));
                 $scope.accessToken = response.authResponse.accessToken;
-
+                $rootScope.token = response.authResponse.accessToken;
                 $scope.me();
-
-
               }
           }, {scope: 'user_photos'}); // ask for pictures permission
         };
@@ -163,6 +167,8 @@ angular
               console.log(JSON.stringify(response));
               $scope.$apply(function() {
                 $scope.user   = {};
+                $scope.accessToken = '';
+                $rootScope.token = null;
                 $scope.logged = false;  
               });
             });

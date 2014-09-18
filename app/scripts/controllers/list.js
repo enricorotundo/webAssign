@@ -8,10 +8,8 @@
  * Controller of the webAssignApp
  */
 angular.module('webAssignApp')
-  .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+  .controller('MainCtrl', ['$location', function ($scope, $location) {
+
+
+    
+  }]);

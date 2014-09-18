@@ -23,10 +23,10 @@
     <!-- Add your site or application content here -->
     <div class="container">
       <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a ng-href="#">List</a></li>
-          <li><a ng-href="#/about">Gallery</a></li>
-          <li><a ng-href="#/login" ng-show="">Login</a></li>
+        <ul class="nav nav-pills pull-right" ng-controller="HeaderCtrl">
+          <li ng-class="{ active: isActive('/list')}"><a ng-href="#/list">List</a></li>
+          <li ng-class="{ active: isActive('/gallery')}"><a ng-href="#/gallery">Gallery</a></li>
+          <li><a ng-href="#/login" ng-show="token">Logout</a></li>
         </ul>
         <h3 class="text-muted">FB gallery viewer</h3>
       </div>
@@ -34,7 +34,7 @@
       <div ng-view=""></div>
 
       <div class="footer">
-          footerz
+          access token = {{token}}
       </div>
     </div>
 
@@ -64,12 +64,13 @@
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/about.js"></script>
+        <script src="scripts/controllers/list.js"></script>
+        <script src="scripts/controllers/gallery.js"></script>
         <!-- endbuild -->
 
         <!-- manually add, then use https://github.com/jwvdiermen/grunt-include-source -->
         <script src="scripts/controllers/login.js"></script>
+        <script src="scripts/controllers/header.js"></script>
         <script src="scripts/angular-facebook.js"></script>
 </body>
 </html>
