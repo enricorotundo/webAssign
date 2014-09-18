@@ -18,7 +18,7 @@ angular
     'ngTouch',
     'facebook'
   ])
-  .config(function ($routeProvider) {
+  .config(function ($routeProvider, $locationProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -37,40 +37,44 @@ angular
         controller: 'LoginCtrl'
       });
   })
+
   // https://github.com/Ciul/angular-facebook
   .config(['FacebookProvider', function(FacebookProvider) {
         
         FacebookProvider.init('1526558950912850');
       }
   ])
+
+
   // https://github.com/Ciul/angular-facebook
-  .controller('facebookCtrl', ['$scope','$timeout','Facebook', function($scope, Facebook) {
-    
-      $scope.login = function() {
-        // From now on you can use the Facebook service just as Facebook api says
-        Facebook.login(function(response) {
-          // Do something with response.
-        });
-      };
+   .controller('authenticationCtrl', function($scope, Facebook) {
 
-      $scope.getLoginStatus = function() {
-        Facebook.getLoginStatus(function(response) {
 
-          console.log(response);
 
-          if(response.status === 'connected') {
-            $scope.loggedIn = true;
-          } else {
-            $scope.loggedIn = false;
-          }
-        });
-      };
+    $scope.login = function() {
+      console.log('login pressed');
+      // From now on you can use the Facebook service just as Facebook api says
+      Facebook.login(function(response) {
+        // Do something with response.
+        console.log(response);
+      });
+    };
 
-      $scope.me = function() {
-        Facebook.api('/me', function(response) {
-          $scope.user = response;
-        });
-      };
+    $scope.getLoginStatus = function() {
+      Facebook.getLoginStatus(function(response) {
+        if(response.status === 'connected') {
+          $scope.loggedIn = true;
+        } else {
+          $scope.loggedIn = false;
+        }
+      });
+    };
 
-    }])
+    $scope.me = function() {
+      Facebook.api('/me', function(response) {
+        $scope.user = response;
+      });
+    };
+  })
+  
   ;

@@ -8,6 +8,10 @@
  * # LoginCtrl
  * Controller of the webAssignApp
  */
-angular.module('webAssignApp').controller('LoginCtrl', function () {
-	
-});
+angular.module('webAssignApp')
+
+	.controller('LoginCtrl',  function ($scope) {
+
+	}
+
+);
