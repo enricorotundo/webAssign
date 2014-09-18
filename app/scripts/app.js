@@ -47,33 +47,149 @@ angular
 
 
   // https://github.com/Ciul/angular-facebook
-   .controller('authenticationCtrl', function($scope, Facebook) {
+  .controller('authenticationCtrl', [
+    '$scope',
+    '$timeout',
+    'Facebook',
+    function($scope, $timeout, Facebook) {
 
+        // Define user empty data :/
+        $scope.user = {};
+          
+        // Defining user logged status
+        $scope.logged = false;
 
+        var userIsConnected = false;
 
-    $scope.login = function() {
-      console.log('login pressed');
-      // From now on you can use the Facebook service just as Facebook api says
-      Facebook.login(function(response) {
-        // Do something with response.
-        console.log(response);
-      });
-    };
+         // And some fancy flags to display messages upon user status change
+      $scope.byebye = false;
+      $scope.salutation = false;
 
-    $scope.getLoginStatus = function() {
-      Facebook.getLoginStatus(function(response) {
-        if(response.status === 'connected') {
-          $scope.loggedIn = true;
+        /**
+           * Watch for Facebook to be ready.
+           * There's also the event that could be used
+           */
+        $scope.$watch(
+            function() {
+              return Facebook.isReady();
+            },
+            function(newVal) {
+              if (newVal) {
+                $scope.facebookReady = true;
+              }
+            }
+        );
+
+        Facebook.getLoginStatus(function(response) {
+            if (response.status === 'connected') {
+              userIsConnected = true;
+            } 
+        });
+
+         /**
+           * IntentLogin
+           */
+        $scope.IntentLogin = function() {
+            console.log('IntentLogin called');
+            // if(userIsConnected === true) {
+              console.log('userIsConnected');
+              $scope.login();
+            // } else {
+            //   $scope.message = 'You are already connected as ' + $scope.user.name;
+            // }
+        };
+
+        $scope.login = function() {
+          // From now on you can use the Facebook service just as Facebook api says
+          Facebook.login(function(response) {
+            if (response.status === 'connected') {
+                $scope.logged = true;
+                $scope.me();
+              }
+          });
+        };
+
+        $scope.getLoginStatus = function() {
+          Facebook.getLoginStatus(function(response) {
+            if(response.status === 'connected') {
+              $scope.logged = true;
+            } else {
+              $scope.logged = false;
+            }
+          });
+        };
+
+        $scope.me = function() {
+          Facebook.api('/me', function(response) {
+            /**
+            * Using $scope.$apply since this happens outside angular framework.
+            */
+            $scope.$apply(function() {
+               console.log(JSON.stringify(response));
+              $scope.user = response;
+            });
+          });
+        };
+
+         /**
+           * Logout
+           */
+        $scope.logout = function() {
+            Facebook.logout(function(response) {
+              console.log(JSON.stringify(response));
+              $scope.$apply(function() {
+                $scope.user   = {};
+                $scope.logged = false;  
+              });
+            });
+        };
+
+         /**
+       * Taking approach of Events :D
+       */
+      $scope.$on('Facebook:statusChange', function(ev, data) {
+        console.log('Status: ', data);
+        if (data.status === 'connected') {
+          $scope.$apply(function() {
+            $scope.salutation = true;
+            $scope.byebye     = false;    
+          });
         } else {
-          $scope.loggedIn = false;
+          $scope.$apply(function() {
+            $scope.salutation = false;
+            $scope.byebye     = true;
+            
+            // Dismiss byebye message after two seconds
+            $timeout(function() {
+              $scope.byebye = false;
+            }, 2000);
+          });
         }
+        
+        
       });
-    };
 
-    $scope.me = function() {
-      Facebook.api('/me', function(response) {
-        $scope.user = response;
-      });
+  }])
+
+
+
+  /**
+   * Just for debugging purposes.
+   * Shows objects in a pretty way
+   */
+  .directive('debug', function() {
+    return {
+      restrict: 'E',
+      scope: {
+        expression: '=val'
+      },
+      template: '<pre>{{debug(expression)}}</pre>',
+      link: function(scope) {
+        // pretty-prints
+        scope.debug = function(exp) {
+          return angular.toJson(exp, true);
+        };
+      }
     };
   })
   
