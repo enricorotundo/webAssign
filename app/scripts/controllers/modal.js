@@ -12,49 +12,32 @@ angular.module('webAssignApp')
 
     $scope.helloworld = 'MODAL';
 
-    $scope.items = ['item1', 'item2', 'item3'];
+    $scope.picSource = '';
+    $scope.comments = [];
 
-    $scope.open = function (size) {
+    $scope.open = function (photo) { // return a modal instance
       console.log('open pressed');
       var modalInstance = $modal.open({
           templateUrl: 'views/modal.html',
           controller: 'ModalCtrl',
-          size: size,
+          scope: $scope,
+          size: 'lg',
           resolve: {
-          items: function () {
-              return $scope.items;
+            items: function () {
+                return $scope.items;
+              },
+            photo: function(){
+                return photo;
             }
-        }
+          }
       });
 
-      modalInstance.result.then(function (selectedItem) {
+      modalInstance.result.then(function (selectedItem) { //a promise that is resolved when a modal is closed and rejected when a modal is dismissed
         $scope.selected = selectedItem;
       }, function () {
         // $log.info('Modal dismissed at: ' + new Date());
       });
     };
-    
-    // $scope.albumId=$routeParams.albumId; 
-    // console.log($scope.albumId);
-
-    // var query = $scope.albumId.concat('/photos');
-
-    // console.log(query);
-
-    // $scope.getAlbum = function(query) {
-    //       Facebook.api('179967212110778/photos', function(response) {
-    //       	console.log(JSON.stringify(response));
-    //         $scope.$apply(function() {
-               
-    //           $scope.data = response;
-             
-    //         });
-    //       });
-    //     };
-
-
-    //     $scope.data = $scope.getAlbum();
-
 
 
   });

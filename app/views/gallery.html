@@ -10,7 +10,7 @@
 		    	<li class="col-lg-2 col-md-2 col-sm-3 col-xs-4" ng-repeat="photo in data.data">
 		    		<a href=""><img src="" width="150" /></a>
 		    		<img src="{{photo.picture}}" />
-		    		<button ng-controller="ModalCtrl" ng-click="open(lg)"></button> 
+		    		<button ng-controller="ModalCtrl" ng-click="open({{photo}})" ></button> 
 		    		</li>
 			</ul>
 		</div>
