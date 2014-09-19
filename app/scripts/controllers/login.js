@@ -10,7 +10,19 @@
  */
 angular.module('webAssignApp')
 
-	.controller('LoginCtrl',  function ($scope) {
+	.controller('LoginCtrl',  function ($scope, $location, $rootScope) {
+		
+		// $scope.redirectIfLogged = function () {
+		// 			if ($rootScope.token === null) {
+
+		// 			} else {
+		// 				$location.path( '/list' );
+		// 			}
+		// };
+
+		// $scope.redirectCheckLogged = $scope.redirectIfLogged();
+
+		
 
 	}
 );

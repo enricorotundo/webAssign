@@ -1,19 +1,14 @@
 <div class="jumbotron" ng-controller="authenticationCtrl">
 
-	 	<p>{{user.message}}</p>
-          <!-- <div>
-            <div class="alert alert-info" data-ng-show="salutation">Hello, {{user.name}}</div>
-            <div class="alert alert-warning" data-ng-show="byebye">Bye bye :'(</div>
-          </div> -->
-
           
           <button type="button" class="btn btn-primary btn-large" data-ng-show="!logged" data-ng-disabled="!facebookReady" ng-click="IntentLogin()" onlogin="checkLoginState();" scope="public_profile,email">Login with Facebook</button>
-          <button type="button" class="btn btn-danger btn-large" data-ng-show="logged" data-ng-disabled="!facebookReady" data-ng-click="logout()">Logout</button>
-          
-<!-- 
-          <div>
-          	<debug val="user"></debug>
-          </div> -->
+
+          <div data-ng-show="logged">
+            <p>You logged in!</p>
+            <p><a ng-href="#/list">Go to the albums list.</a></p>
+           
+          </div>
+
 </div>
 
  		

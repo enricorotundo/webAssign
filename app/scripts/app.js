@@ -25,7 +25,7 @@ angular
         templateUrl: 'views/list.html',
         controller: 'ListCtrl'
       })
-      .when('/gallery/:albumId?', {
+      .when('/gallery/:albumId', {
         templateUrl: 'views/gallery.html',
         controller: 'GalleryCtrl'
       })
