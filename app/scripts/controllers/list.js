@@ -8,24 +8,24 @@
  * Controller of the webAssignApp
  */
 angular.module('webAssignApp')
-  .controller('ListCtrl', function ($scope, Facebook) {
-  	
-  	console.log('ListCtrl');
-  	
-  	$scope.ciao = 'ciao';
+  .controller('ListCtrl', [
+    '$scope',
+    'Facebook',
+    function($scope, Facebook) {
 
-
-  	$scope.getAlbums = function(Facebook) {
-  		Facebook.api('/me/albums', function(response) {
-  			console.log('getAlbums');
-  			console.log(JSON.stringify(response));
-
-            // $scope.$apply(function() {
+    	$scope.ciao = 'coap';
+    	$scope.getAlbums = function() {
+          Facebook.api('/me/albums', function(response) {
+          	console.log(JSON.stringify(response));
+            /**
+            * Using $scope.$apply since this happens outside angular framework.
+            */
+            $scope.$apply(function() {
                
-            //   $scope.user = response;
+              $scope.user = response;
              
-            // });
-        });
-  	};
-    
-  });
+            });
+          });
+        };
+
+    }]);
