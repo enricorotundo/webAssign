@@ -40,4 +40,10 @@ angular.module('webAssignApp')
     };
 
 
-  });
+  })
+  .controller('CollapseCtrl', function ($scope) {
+    $scope.isCollapsed = true;
+  })
+  
+
+;
