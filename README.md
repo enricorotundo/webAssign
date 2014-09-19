@@ -1,8 +1,10 @@
 webAssign
 =========
 
-### Install instructions: ###
+### Configure: ###
+In ``` app/scripts/app.js ```, line 67 there's the *FB APP ID* field.
 
+### Install: ###
 
 ```
 npm install
