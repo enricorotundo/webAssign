@@ -16,7 +16,8 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'facebook'
+    'facebook',
+    'ui.bootstrap'
   ])
   .config(function ($routeProvider, $locationProvider) {
     $routeProvider
@@ -24,9 +25,9 @@ angular
         templateUrl: 'views/list.html',
         controller: 'ListCtrl'
       })
-      .when('/gallery', {
+      .when('/gallery/:albumId?', {
         templateUrl: 'views/gallery.html',
-        controller: 'AboutCtrl'
+        controller: 'GalleryCtrl'
       })
       .when('/login', {
         templateUrl: 'views/login.html',

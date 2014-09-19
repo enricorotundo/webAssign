@@ -10,10 +10,12 @@
 angular.module('webAssignApp')
   .controller('ListCtrl', [
     '$scope',
+    '$rootScope',
     'Facebook',
-    function($scope, Facebook) {
+    function($rootScope, $scope, Facebook) {
 
-    	$scope.ciao = 'coap';
+    	$scope.accessToken = $rootScope.token;
+
     	$scope.getAlbums = function() {
           Facebook.api('/me/albums', function(response) {
           	console.log(JSON.stringify(response));
@@ -22,10 +24,15 @@ angular.module('webAssignApp')
             */
             $scope.$apply(function() {
                
-              $scope.user = response;
+              $scope.data = response;
+              $scope.ownerName = response.data[0].from.name;
              
             });
           });
         };
+
+
+        $scope.data = $scope.getAlbums();
+
 
     }]);

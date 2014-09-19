@@ -1,1 +1,19 @@
-<p>about.</p>
+<p><a href="#/list">Select an album from the List.</a></p>
+
+
+<div class="list">
+
+	<h4>Album #{{data.data[0].id}}:</h4> 
+		
+		<div class="container">
+		    <ul class="row">
+		    	<li class="col-lg-2 col-md-2 col-sm-3 col-xs-4" ng-repeat="photo in data.data">
+		    		<a href=""><img src="" width="150" /></a>
+		    		<img src="{{photo.picture}}" />
+		    		<button ng-controller="ModalCtrl" ng-click="open(lg)"></button> 
+		    		</li>
+			</ul>
+		</div>
+
+		<!-- <ng-include src="'views/modal.html'"></ng-include> -->
+</div>
