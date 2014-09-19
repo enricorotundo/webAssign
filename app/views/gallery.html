@@ -8,12 +8,8 @@
 		<div class="container">
 		    <ul class="row">
 		    	<li class="col-lg-2 col-md-2 col-sm-3 col-xs-4" ng-repeat="photo in data.data">
-		    		<a href=""><img src="" width="150" /></a>
-		    		<img src="{{photo.picture}}" />
-		    		<button ng-controller="ModalCtrl" ng-click="open({{photo}})" ></button> 
+		    		<a href="" ng-controller="ModalCtrl" ng-click="open({{photo}})"><img src="{{photo.picture}}" /></a>
 		    		</li>
 			</ul>
 		</div>
-
-		<!-- <ng-include src="'views/modal.html'"></ng-include> -->
 </div>

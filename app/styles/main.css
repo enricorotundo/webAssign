@@ -78,6 +78,10 @@ body {
   }
 }
 
+  .navbar-nav {
+    height: 50px;
+  }
+
 .myModal {
     padding: 15px;
 }
