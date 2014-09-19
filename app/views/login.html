@@ -1,7 +1,7 @@
 <div class="jumbotron" ng-controller="authenticationCtrl">
 
           
-          <button type="button" class="btn btn-primary btn-large" data-ng-show="!logged" data-ng-disabled="!facebookReady" ng-click="IntentLogin()" onlogin="checkLoginState();" scope="public_profile,email">Login with Facebook</button>
+          <a type="button" class="btn btn-primary btn-large" data-ng-show="!logged" data-ng-disabled="!facebookReady" ng-click="IntentLogin()" onlogin="checkLoginState();" scope="public_profile,email">Login with Facebook</a>
 
           <div data-ng-show="logged">
             <p>You logged in!</p>
